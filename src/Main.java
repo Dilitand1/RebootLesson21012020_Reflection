@@ -24,19 +24,17 @@ public class Main {
 
         MyClass myClass = MyClass.class.newInstance();
         Handler handler = new Handler(myClass);
-        Ipow proxy = (Ipow) Proxy.newProxyInstance(Ipow.class.getClassLoader(),new Class[]{Ipow.class},handler);
+        Ipow proxy = (Ipow) Proxy.newProxyInstance(Ipow.class.getClassLoader(), new Class[]{Ipow.class}, handler);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите целое число:");
-        if (scanner.hasNextInt()){
+        if (scanner.hasNextInt()) {
             int i = scanner.nextInt();
             proxy.square(i);
             proxy.setI(i);
             proxy.notCashe(i);
-        }
-        else{
+        } else {
             System.out.println("Введен не Integer");
         }
-
     }
 
     static void printAllMethods(Class cl) {

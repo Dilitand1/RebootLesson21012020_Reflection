@@ -1,12 +1,14 @@
 //Создаем свой интерфейс
-interface Ipow{
+interface Ipow {
     Integer square(Integer a);
+
     public void setI(int i);
+
     void notCashe(Integer a);
 }
 
 //Классы которые будем мучать
-class MyClass extends MySuperClass implements Ipow{
+class MyClass extends MySuperClass implements Ipow {
     private int i = inttt + 1;
     private String s = "sadads";
 
@@ -40,7 +42,7 @@ class MyClass extends MySuperClass implements Ipow{
 
     @Cache(maxCashed = 9)
     public Integer square(Integer a) {
-        return a*a;
+        return a * a;
     }
 
 }
