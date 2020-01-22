@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class Main {
     public int x = 0;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
 
         System.out.println("Задание №1 напечатать все методы класса и суперкласса:");
         printAllMethods(MyClass.class);
@@ -15,6 +15,10 @@ public class Main {
 
         System.out.println("Задание №3 напечатать все String константы (public static final) если значения и названия равны");
         printAllConstantsEqualsValue(MySuperClass.class);
+        System.out.println();
+
+
+
 
     }
     static void printAllMethods(Class cl){
