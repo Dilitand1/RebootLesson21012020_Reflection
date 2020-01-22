@@ -5,13 +5,15 @@ public class Main {
     public int x = 0;
     public static void main(String[] args) {
 
-        //System.out.println("Задание №1 напечатать все методы класса и суперкласса:");
-        //printAllMethods(MyClass.class);
+        System.out.println("Задание №1 напечатать все методы класса и суперкласса:");
+        printAllMethods(MyClass.class);
+        System.out.println();
 
-        //System.out.println("Задание №2 напечатать все геттеры");
-        //printAllGetters(MyClass.class);
+        System.out.println("Задание №2 напечатать все геттеры");
+        printAllGetters(MyClass.class);
+        System.out.println();
 
-        System.out.println("Задание №3 напечатать все String константы (public static final) поля если значения и названия равны");
+        System.out.println("Задание №3 напечатать все String константы (public static final) если значения и названия равны");
         printAllConstantsEqualsValue(MySuperClass.class);
 
     }
@@ -41,7 +43,7 @@ public class Main {
         String tmpFieldValue = "";
         if (cl != Object.class && cl != null) {
             for (Field field : cl.getDeclaredFields()) {
-                //Методом тыка определил что модификатор public static - это 25, можно написать еще вот так field.getModifiers() == (Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL)
+                //Методом тыка определил что модификатор public final static - это 25, можно написать еще вот так field.getModifiers() == (Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL)
                 if (field.getType() == String.class && field.getModifiers() == 25) {
                     try {
                         tmpFieldValue = (String) field.get(cl);
@@ -99,7 +101,7 @@ class MyClass extends MySuperClass{
         return s;
     }
 
-    public void setI(){
+    public void setI(int i){
         this.i = i;
     }
     public int sum(Integer a,Integer b){
