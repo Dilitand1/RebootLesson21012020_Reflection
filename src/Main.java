@@ -1,5 +1,6 @@
 import java.lang.reflect.*;
 import java.util.Arrays;
+import java.lang.annotation.*;
 
 public class Main {
     public int x = 0;
@@ -17,8 +18,10 @@ public class Main {
         printAllConstantsEqualsValue(MySuperClass.class);
         System.out.println();
 
+        //Доп задание - создать объект класса через конструктор. получить значение приватной переменной не через геттер. Запустить метод
+        testReflection();
 
-
+        System.out.println("Задание №4 Реализовать кэширующий прокси перехватывающий вызов интерфейса и подменяет работу метода помеченного аннотацией @Cache");
 
     }
     static void printAllMethods(Class cl){
@@ -42,23 +45,55 @@ public class Main {
             }
         }
     }
-    static <T> void printAllConstantsEqualsValue(Class<T> cl) {
-        String tmpFieldName = "";
-        String tmpFieldValue = "";
+    static void printAllConstantsEqualsValue(Class cl) {
         if (cl != Object.class && cl != null) {
             for (Field field : cl.getDeclaredFields()) {
                 //Методом тыка определил что модификатор public final static - это 25, можно написать еще вот так field.getModifiers() == (Modifier.PUBLIC | Modifier.STATIC | Modifier.FINAL)
                 if (field.getType() == String.class && field.getModifiers() == 25) {
                     try {
-                        tmpFieldValue = (String) field.get(cl);
-                        tmpFieldName = field.getName();
+                        String tmpFieldValue = (String) field.get(cl);
+                        String tmpFieldName = field.getName();
+                        //Проверяем соответствие
+                        if(tmpFieldName.equals(tmpFieldValue)) System.out.println(field.getName());
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
-                    //Проверяем соответствие
-                    if(!tmpFieldName.equals("") && tmpFieldName.equals(tmpFieldValue)) System.out.println(field.getName());
                 }
             }
+        }
+    }
+    static void testReflection(){
+        try {
+            MyClass mc = MyClass.class.newInstance();
+            Field field = mc.getClass().getDeclaredField("s");
+            field.setAccessible(true);
+            field.set(mc,"new Value");
+            System.out.println(field.get(mc));
+            System.out.println(mc.getS());
+
+            Field field2 = MyClass.class.getDeclaredField("i");
+            MyClass mc2 = MyClass.class.getConstructor(int.class).newInstance(10);
+            //System.out.println(field2.get(mc2)); - если вызвать до setAcceible будет иллегалАксессЭксепшн
+            field2.setAccessible(true);
+            System.out.println(field2.get(mc2));
+            field2.set(mc2,111111);
+
+
+            System.out.println(field2.get(mc2));
+
+            Method method = MyClass.class.getDeclaredMethod("geti");
+            method.setAccessible(true);
+            Integer s = (Integer) method.invoke(mc);
+            System.out.println(s);
+
+            Constructor[] constructors = MyClass.class.getDeclaredConstructors();
+            Constructor constructor = MyClass.class.getDeclaredConstructor(int.class,String.class);
+            constructor.setAccessible(true);
+            MyClass myClass3 = MyClass.class.getConstructor(int.class,String.class).newInstance();
+
+
+        } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | NoSuchFieldException e) {
+            e.printStackTrace();
         }
     }
 }
@@ -89,14 +124,17 @@ class MySuperClass{
 
 class MyClass extends MySuperClass{
     private int i = inttt + 1;
-    String s = "sadads";
+    private String s = "sadads";
 
     public MyClass(){
     }
-    private MyClass(int i){
+    public MyClass(int i){
         this.i = i;
     }
-
+    private MyClass(int i,String s){
+        this.i = i;
+        this.s = s;
+    }
     private int geti(){
         return i;
     }
@@ -108,7 +146,15 @@ class MyClass extends MySuperClass{
     public void setI(int i){
         this.i = i;
     }
+    @Cache
     public int sum(Integer a,Integer b){
         return a + b;
     }
+}
+
+//Создаем свою аннотацию
+@Target(value=ElementType.METHOD)
+@Retention(value = RetentionPolicy.RUNTIME)
+@interface Cache{
+
 }

@@ -1,3 +1,4 @@
+import java.beans.ExceptionListener;
 import java.util.Arrays;
 
 public class TestEnum {
@@ -16,10 +17,10 @@ public class TestEnum {
         Seasons.NEWSEASON.tst();
     }
 }
-enum Seasons{
+enum Seasons {
 
     WINTER, SPRING, SUMMER, AUTUMN
-//Так работает полиморфизм
+//Так работает полиморфизм, если бы енум имплементил что-то, то нужно было в теле реализовать методы интерфейса
     ,NEWSEASON{
         public void tst(){
             System.out.println("asdsdasad");
