@@ -10,10 +10,21 @@ public class TestEnum {
 
         System.out.println(seasons1.nextSeasons());
         System.out.println(seasons.nextSeasons());
+
+        System.out.println(Seasons.NEWSEASON.getClass().getName());
+        System.out.println(Seasons.NEWSEASON.getClass().getSuperclass());
+        Seasons.NEWSEASON.tst();
     }
 }
 enum Seasons{
-    WINTER, SPRING, SUMMER, AUTUMN;
+
+    WINTER, SPRING, SUMMER, AUTUMN
+//Так работает полиморфизм
+    ,NEWSEASON{
+        public void tst(){
+            System.out.println("asdsdasad");
+        }
+    };
     public Seasons nextSeasons(){
         if (this == Seasons.AUTUMN){
             return Seasons.WINTER;
@@ -21,5 +32,7 @@ enum Seasons{
         else {
             return Seasons.values()[this.ordinal()+1];
         }
+    }
+    public void tst() {
     }
 }
