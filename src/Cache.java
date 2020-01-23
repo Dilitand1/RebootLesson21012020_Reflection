@@ -5,5 +5,4 @@ import java.lang.annotation.*;
 @Retention(value = RetentionPolicy.RUNTIME)
 @Inherited
 @interface Cache {
-    int maxCashed();
 }

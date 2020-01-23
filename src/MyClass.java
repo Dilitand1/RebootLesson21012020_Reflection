@@ -1,9 +1,9 @@
 //Создаем свой интерфейс
 interface Ipow {
-    @Cache(maxCashed = 9)
+    @Cache
     Integer square(Integer a);
 
-    public void setI(int i);
+    void setI(int i);
 
     void notCashe(Integer a);
 }
@@ -41,7 +41,7 @@ class MyClass extends MySuperClass implements Ipow {
         System.out.println("результат работы метода notCashe " + a);
     }
 
-    @Cache(maxCashed = 9)
+    @Cache
     public Integer square(Integer a) {
         return a * a;
     }
