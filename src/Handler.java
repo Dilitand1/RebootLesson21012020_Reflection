@@ -26,7 +26,7 @@ public class Handler implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
         //Почему то когда используешь method, то не видит аннотацию, так что юзаем костыль...:
-        Method method1 = MyClass.class.getDeclaredMethod(method.getName(), method.getParameterTypes());
+        Method method1 = realObject.getClass().getDeclaredMethod(method.getName(), method.getParameterTypes());
         System.out.print("имя метода " + method1.getName());
         if (method1.isAnnotationPresent(Cache.class)) {
             System.out.println(", в методе есть аннотация @Cache, пытаемся обработать...");
