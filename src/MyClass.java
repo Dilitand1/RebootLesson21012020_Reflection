@@ -1,6 +1,6 @@
 //Создаем свой интерфейс
 interface Ipow {
-    @Cache
+
     Integer square(Integer a);
 
     void setI(int i);
