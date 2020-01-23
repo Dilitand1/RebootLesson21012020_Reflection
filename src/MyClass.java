@@ -1,5 +1,6 @@
 //Создаем свой интерфейс
 interface Ipow {
+    @Cache(maxCashed = 9)
     Integer square(Integer a);
 
     public void setI(int i);

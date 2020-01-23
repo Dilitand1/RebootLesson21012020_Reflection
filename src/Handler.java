@@ -27,9 +27,9 @@ public class Handler implements InvocationHandler {
 
         //method.isAnnotationPresent(Cache.class) всегда false
         //Почему то когда используешь method, то не видит аннотацию, так что юзаем костыль...:
-        Method method1 = realObject.getClass().getDeclaredMethod(method.getName(), method.getParameterTypes());
-        System.out.print("имя метода " + method1.getName());
-        if (method1.isAnnotationPresent(Cache.class)) {
+        //Method method1 = realObject.getClass().getDeclaredMethod(method.getName(), method.getParameterTypes());
+        System.out.print("имя метода " + method.getName());
+        if (method.isAnnotationPresent(Cache.class)) {
             System.out.println(", в методе есть аннотация @Cache, пытаемся обработать...");
             if (map.containsKey(args[0])) {
                 System.out.println("Результат найден в кэше: " + map.get(args[0]));
@@ -38,7 +38,7 @@ public class Handler implements InvocationHandler {
             }
         } else {
             System.out.println(", в методе нет аннотации @Cashe, обрабатываем метод без прокси");
-            method1.invoke(realObject, args);
+            method.invoke(realObject, args);
         }
         return null;
 
